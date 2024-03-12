@@ -1,33 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using Raylib_cs;
 
 namespace rl_pong
 {
-    public class Player
+    public abstract class Player
     {
-        private const int HorizontalPosOffset = 100;
-        private const int BracketWidth = 10;
+        internal readonly int HorizontalPosOffset = 100;
+        internal readonly int BracketWidth = 10;
 
         private int points = 0;
         private float speed = 1;
         private float size = 100;
         private float pos = 400;
-    
-        public int GetPoints()
+
+        protected Player(string type)
         {
-            return points;
+            if(type == "cpu")
+            {
+                this.speed = 1;
+                this.HorizontalPosOffset = 1100;
+                this.BracketWidth = 10;
+
+            }
+
+            if(type == "local")
+            {
+                this.speed = 2;
+                this.HorizontalPosOffset = 100;
+                this.BracketWidth = 10;
+            }
         }
+
 
         public float GetSpeed()
         {
             return speed;
+        }
+
+        public void SetPos(float pos)
+        {
+            this.pos = pos;
         }
 
         public void GetSpeed(float speed)
@@ -35,18 +47,13 @@ namespace rl_pong
             this.speed = speed;
         }
 
-        public void GetPoints(int points) 
-        {
-            this.points = points;
+        public void IncrementPosition(float x) {
+            this.pos += x;
         }
 
         public float GetPos()
         {
             return pos;
-        }
-        public void SetPos(float pos)
-        {
-            this.pos = pos;
         }
 
         public float GetSize()
@@ -57,18 +64,6 @@ namespace rl_pong
         public void SetSize(float size)
         {
             this.size = size;
-        }
-
-        public void Move() {
-            if (Raylib.IsKeyDown(KeyboardKey.Up))
-            {
-                this.pos -= this.speed;
-            }
-
-            else if (Raylib.IsKeyDown(KeyboardKey.Down))
-            {
-                this.pos += this.speed;
-            }
         }
 
         public Rectangle GetRectangle()
@@ -82,6 +77,11 @@ namespace rl_pong
             };
 
             return r;
+        }
+
+        public int GetOffset()
+        {
+            return this.HorizontalPosOffset;
         }
 
 
