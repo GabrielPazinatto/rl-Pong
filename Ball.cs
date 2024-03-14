@@ -1,6 +1,5 @@
 ﻿
-using System.Numerics;
-using Raylib_cs;
+
 
 namespace rl_pong
 {
@@ -8,20 +7,17 @@ namespace rl_pong
     {
         private readonly int radius = 10;
 
-        private Vector2 pos = new(600, 450);               
-        private Vector2 direction = new(-1, 0);           // unitary Vector2 (starts as -1, 0 but defaults as 1, 1)
-        private Vector2 speed = new(4,3);                 // direction speed multiplier
+        private Vector2 pos = new( 600, 450);               
+        private Vector2 direction = new(-1, 0);                 // unitary Vector2 (starts as -1, 0 but defaults as 1, 1)
+        private Vector2 speed = new(4,3);                       // direction speed multiplier
         private Vector2 lastCollision = 
-            new(Program.screenWidth/2,Program.screenHeight/2);
+            new(Program.screenWidth/2,Program.screenHeight/2);  //used to determine direction after collision
         private Vector2[] vectors = new Vector2[3];
         private bool drawVectors = false;
-
- 
 
         /*-------------------------
                    GETTERS
          -------------------------*/
-
 
         public Vector2 GetPos()                           
         { return this.pos; }
@@ -36,7 +32,7 @@ namespace rl_pong
             return this.direction;
         }
 
-        private Vector2 GetInstantSpeed()                 //returns speed*direction
+        private Vector2 GetInstantSpeed() //returns speed*direction
         {
             Vector2 spd;
 
@@ -99,14 +95,14 @@ namespace rl_pong
         public void DrawVectors()
         {
 
-            if (Raylib.IsKeyPressed(KeyboardKey.V))
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_V))
                 this.drawVectors = !this.drawVectors;
 
 
             if(!this.drawVectors) return;
 
-            Color color = Color.White;
-            color.A = 50;
+            Color color = WHITE;
+            color.a = 50;
 
             Raylib.DrawTriangleLines(
                 this.vectors[0],
@@ -124,7 +120,7 @@ namespace rl_pong
             Vector2 a = new(Program.screenWidth, this.pos.Y);
 
             bool negativeSpeedX = this.direction.X < 0;
-            bool reverseSpeedY = this.pos.Y < collider.Position.Y + (collider.Height / 2);
+            bool reverseSpeedY = this.pos.Y < collider.y + (collider.height / 2);
 
             float hip = System.Numerics.Vector2.Distance(dst, src);
             float cat2 = System.Numerics.Vector2.Distance(dst, a);

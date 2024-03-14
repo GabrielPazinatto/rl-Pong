@@ -1,5 +1,4 @@
-﻿using System;
-using Raylib_cs;
+﻿
 using rl_pong;
 
 public class GameEvents
@@ -26,11 +25,11 @@ public class GameEvents
     {
         int i = 255;
         int j = 3;
-        Color color = Color.White;
+        Color color = WHITE;
 
         while (true)
         {
-            color.A = System.Convert.ToByte(i);
+            color.a = System.Convert.ToByte(i);
 
             Raylib.BeginDrawing();
 
@@ -39,7 +38,7 @@ public class GameEvents
                 Program.screenHeight / 2 - 50,
                 100,
                 100,
-                Color.DarkGray
+                DARKGRAY
                 );
 
             Raylib.DrawText(
@@ -47,7 +46,7 @@ public class GameEvents
                 (Program.screenWidth / 2) -Raylib.MeasureText(j.ToString(), 100)/2,
                 Program.screenHeight/2 - 50,
                 100,
-                Color.White);
+                WHITE);
 
             i -= 255/Raylib.GetMonitorRefreshRate(0);
 
@@ -67,7 +66,7 @@ public class GameEvents
 
     public void CheckResetGame()
     {
-        if (!Raylib.IsKeyPressed(KeyboardKey.R)) return;
+        if (!Raylib.IsKeyPressed(KeyboardKey.KEY_R)) return;
 
         Program.player.SetPoints(0);
         Program.cpu.SetPoints(0);
@@ -97,7 +96,7 @@ public class GameEvents
 
     public void CheckPauseGame()
     {
-        if (Raylib.IsKeyPressed(KeyboardKey.P))
+        if (Raylib.IsKeyPressed(KeyboardKey.KEY_P))
             this.paused = !this.paused;
 
         Color color = new(100, 100, 100, 10);
@@ -116,7 +115,7 @@ public class GameEvents
 
             Raylib.EndDrawing();
 
-            if (Raylib.IsKeyPressed(KeyboardKey.P))
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_P))
                 this.paused = !this.paused;
         }
 

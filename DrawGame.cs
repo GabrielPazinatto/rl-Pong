@@ -1,5 +1,4 @@
-﻿using System;
-using Raylib_cs;
+﻿
 using rl_pong;
 
 
@@ -10,7 +9,7 @@ namespace Draw
 
         public void DrawPlayer(Player player)
         {
-            Raylib.DrawRectangleRec(player.GetRectangle(), Color.White);
+            Raylib.DrawRectangleRec(player.GetRectangle(), WHITE);
         }
 
         public void DrawBall(Ball ball)
@@ -18,36 +17,41 @@ namespace Draw
             Raylib.DrawCircleV(
                 ball.GetPos(),
                 ball.GetRadius(),
-                Color.Green
+                GREEN
                 );
         }
 
         public void DrawHUD()
         {
+
+            //draws green bar on the left
             Raylib.DrawRectangle(
                 0,
                 0,
                 10,
                 Program.screenHeight,
-                Color.Green
-                );
+                GREEN
+            );
 
+            //draws green bar on the right
             Raylib.DrawRectangle(
                 Program.screenWidth - 10,
                 0,
                 10,
                 Program.screenHeight,
-                Color.Green);
+                GREEN
+            );
 
-
+            //draws gray bar in the middle of the screen
             Raylib.DrawRectangle(
                 (Program.screenWidth / 2) - 5,
                 0,
                 5,
                 Program.screenHeight,
                 new(255, 255, 255, 100)
-                );
+            );
 
+            //draws points for the players
             String text = Program.player.GetPoints().ToString();
             int fontSize = 100;
 
@@ -70,14 +74,35 @@ namespace Draw
             );
         }
 
+        //draws text for the controls on the bottom left
         public void DrawControls()
         {
+            //draws pause key
+            Raylib.DrawText(
+                "Pause (p)",
+                15,
+                Program.screenHeight - 20,
+                20,
+                new(255, 255, 255, 100)
+            );
 
+            //draws Draw Vectors key
+            Raylib.DrawText(
+                "Draw Vectors (v)",
+                15,
+                Program.screenHeight - 45,
+                20,
+                new(255, 255, 255, 100)
+            );
 
-
-
+            //draws reset key
+            Raylib.DrawText(
+                "Reset (r)",
+                15,
+                Program.screenHeight - 70,
+                20,
+                new(255, 255, 255, 100)
+            );
         }
-
-
     }
 }

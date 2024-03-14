@@ -1,6 +1,4 @@
 ﻿
-using Raylib_cs;
-
 namespace rl_pong
 {
     public abstract class Player
@@ -12,6 +10,10 @@ namespace rl_pong
         private float speed = 1;
         private float size = 150;
         private float pos = 400;
+
+        /*-------------------------
+                CONSTRUCTOR
+        -------------------------*/
 
         protected Player(string type)
         {
@@ -32,6 +34,9 @@ namespace rl_pong
             }
         }
 
+        /*-------------------------
+                GETTERS
+        -------------------------*/
 
         public float GetWidth()
         {
@@ -48,20 +53,6 @@ namespace rl_pong
             return speed;
         }
 
-        public void SetPos(float pos)
-        {
-            this.pos = pos;
-        }
-
-        public void GetSpeed(float speed)
-        {
-            this.speed = speed;
-        }
-
-        public void IncrementPosition(float x) {
-            this.pos += x;
-        }
-
         public float GetPos()
         {
             return pos;
@@ -70,6 +61,34 @@ namespace rl_pong
         public float GetSize()
         {
             return size;
+        }
+
+        public int GetOffset()
+        {
+            return this.HorizontalPosOffset;
+        }
+
+
+        public Rectangle GetRectangle()
+        {
+            Rectangle r = new Rectangle
+            {
+                width = BarWidth,
+                X = HorizontalPosOffset,
+                Y = this.pos,
+                height = this.size
+            };
+
+            return r;
+        }
+
+        /*-------------------------
+                SETTERS
+        -------------------------*/
+
+        public void SetPos(float pos)
+        {
+            this.pos = pos;
         }
 
         public void SetPoints(int points)
@@ -82,29 +101,18 @@ namespace rl_pong
             this.size = size;
         }
 
+        /*-------------------------
+            OTHER FUNCTIONS
+        -------------------------*/
+
+        public void IncrementPosition(float x)
+        {
+            this.pos += x;
+        }
+
         public void IncPoints()
         {
             points++;
         }
-
-        public Rectangle GetRectangle()
-        {
-            Rectangle r = new Rectangle
-            {
-                Width = BarWidth,
-                X = HorizontalPosOffset,
-                Y = this.pos,
-                Height = this.size
-            };
-
-            return r;
-        }
-
-        public int GetOffset()
-        {
-            return this.HorizontalPosOffset;
-        }
-
-
     }
 }

@@ -1,5 +1,10 @@
-﻿
-using Raylib_cs;
+﻿global using Raylib_CsLo;
+global using System.Numerics;
+
+global using static Raylib_CsLo.Raylib;
+global using static Raylib_CsLo.RayMath;
+global using static Raylib_CsLo.RayGui;
+global using static Raylib_CsLo.RlGl;
 
 namespace rl_pong
 {
@@ -23,16 +28,21 @@ namespace rl_pong
 
             while (!Raylib.WindowShouldClose())
             {
+
                 Raylib.BeginDrawing();
-                Raylib.ClearBackground(Color.DarkGray);
+                Raylib.ClearBackground(DARKGRAY);
+
+
 
                 /*-------------------
                         DRAWING
                 --------------------*/
+
                 draw.DrawBall(Program.ball);
                 draw.DrawPlayer(Program.player);
                 draw.DrawPlayer(Program.cpu);
                 draw.DrawHUD();
+                draw.DrawControls();
 
                 /*-------------------
                        UPDATING
