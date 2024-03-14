@@ -6,31 +6,35 @@ namespace rl_pong
     public abstract class Player
     {
         internal readonly int HorizontalPosOffset = 100;
-        internal readonly int BracketWidth = 10;
+        internal readonly int BarWidth = 10;
 
         private int points = 0;
         private float speed = 1;
-        private float size = 100;
+        private float size = 150;
         private float pos = 400;
 
         protected Player(string type)
         {
             if(type == "cpu")
             {
-                this.speed = 1;
+                this.speed = 1.2f;
                 this.HorizontalPosOffset = 1100;
-                this.BracketWidth = 10;
-
+                this.BarWidth = 10;
             }
 
             if(type == "local")
             {
                 this.speed = 2;
                 this.HorizontalPosOffset = 100;
-                this.BracketWidth = 10;
+                this.BarWidth = 10;
             }
         }
 
+
+        public float GetWidth()
+        {
+            return this.BarWidth;
+        }
 
         public float GetSpeed()
         {
@@ -66,11 +70,16 @@ namespace rl_pong
             this.size = size;
         }
 
+        public void IncPoints()
+        {
+            points++;
+        }
+
         public Rectangle GetRectangle()
         {
             Rectangle r = new Rectangle
             {
-                Width = BracketWidth,
+                Width = BarWidth,
                 X = HorizontalPosOffset,
                 Y = this.pos,
                 Height = this.size

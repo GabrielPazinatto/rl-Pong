@@ -18,9 +18,28 @@ namespace Draw
             Raylib.DrawCircleV(
                 ball.GetPos(),
                 ball.GetRadius(),
-                Color.Yellow
+                Color.Green
                 );
         }
+
+        public void DrawHUD()
+        {
+            Raylib.DrawRectangle(
+                0,
+                0,
+                10,
+                Program.screenHeight,
+                Color.Green
+                );
+
+            Raylib.DrawRectangle(
+                Program.screenWidth - 10,
+                0,
+                10,
+                Program.screenHeight,
+                Color.Green);
+        }
+
 
     }
 }

@@ -1,4 +1,6 @@
 ﻿
+using Raylib_cs;
+
 namespace rl_pong
 {
     public class CPUPlayer : Player
@@ -8,14 +10,12 @@ namespace rl_pong
         public void Move()
         {
             Ball target = Program.ball;
-            bool canMove = Math.Abs(this.GetPos() - target.GetPos().Y) > this.GetSpeed();
-
-            //Console.WriteLine(target.GetDirection().ToString());
+            bool canMove = Math.Abs(this.GetPos() - target.GetPos().Y) - Raylib.GetRandomValue(-20, 20) > this.GetSpeed();
 
             if (target.GetDirection().X > 0 && canMove) {
 
-                if (this.GetPos() > target.GetPos().Y - this.GetSize()/2)
-                    this.IncrementPosition(-this.GetSpeed());
+                if (this.GetPos() > (target.GetPos().Y - this.GetSize()/2))
+                    this.IncrementPosition(-this.GetSpeed() );
 
                 else this.IncrementPosition(this.GetSpeed());
 

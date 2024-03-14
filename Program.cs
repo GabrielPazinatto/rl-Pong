@@ -5,7 +5,7 @@ namespace rl_pong
 {
     public class Program
     {
-        public static LocalPlayer player = new();
+        public static LocalPlayer player = new(); 
         public static CPUPlayer cpu = new();
 
         public static Ball ball = new();
@@ -16,19 +16,28 @@ namespace rl_pong
         public static void Main()
         {
             Draw.DrawGame draw = new();
+            GameEvents game = new();
 
-            Raylib.SetTargetFPS(Raylib.GetMonitorRefreshRate(0));
-            Raylib.InitWindow(Program.screenWidth, Program.screenHeight, "Pong");;
+            Raylib.SetTargetFPS(Raylib.GetMonitorRefreshRate(0));                     // sets FPS
+            Raylib.InitWindow(Program.screenWidth, Program.screenHeight, "Pong");     // 
 
             while (!Raylib.WindowShouldClose())
             {
                 Raylib.BeginDrawing();
                 Raylib.ClearBackground(Color.DarkGray);
 
+                /*-------------------
+                        DRAWING
+                --------------------*/
                 draw.DrawBall(Program.ball);
                 draw.DrawPlayer(Program.player);
                 draw.DrawPlayer(Program.cpu);
+                draw.DrawHUD();
 
+                /*-------------------
+                       UPDATING
+                --------------------*/
+                game.CheckIfScored();
                 Program.ball.Move();
                 Program.player.Move();
                 Program.cpu.Move();
