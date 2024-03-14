@@ -37,10 +37,14 @@ namespace rl_pong
                 /*-------------------
                        UPDATING
                 --------------------*/
+
                 game.CheckIfScored();
+                game.CheckResetGame();
+                game.CheckPauseGame();
                 Program.ball.Move();
                 Program.player.Move();
                 Program.cpu.Move();
+                Program.ball.DrawVectors();
 
                 Raylib.EndDrawing();
             }

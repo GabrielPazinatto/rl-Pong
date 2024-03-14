@@ -17,9 +17,10 @@ namespace rl_pong
         {
             if(type == "cpu")
             {
-                this.speed = 1.2f;
+                this.speed = 1;
                 this.HorizontalPosOffset = 1100;
                 this.BarWidth = 10;
+                this.points = 0;
             }
 
             if(type == "local")
@@ -27,6 +28,7 @@ namespace rl_pong
                 this.speed = 2;
                 this.HorizontalPosOffset = 100;
                 this.BarWidth = 10;
+                this.points = 0;
             }
         }
 
@@ -34,6 +36,11 @@ namespace rl_pong
         public float GetWidth()
         {
             return this.BarWidth;
+        }
+
+        public int GetPoints()
+        {
+            return this.points;
         }
 
         public float GetSpeed()
@@ -63,6 +70,11 @@ namespace rl_pong
         public float GetSize()
         {
             return size;
+        }
+
+        public void SetPoints(int points)
+        {
+            this.points = points;
         }
 
         public void SetSize(float size)

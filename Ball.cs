@@ -10,23 +10,18 @@ namespace rl_pong
 
         private Vector2 pos = new(600, 450);               
         private Vector2 direction = new(-1, 0);           // unitary Vector2 (starts as -1, 0 but defaults as 1, 1)
-        private Vector2 speed = new(3,2);                 // direction speed multiplier
+        private Vector2 speed = new(4,3);                 // direction speed multiplier
         private Vector2 lastCollision = 
             new(Program.screenWidth/2,Program.screenHeight/2);
+        private Vector2[] vectors = new Vector2[3];
+        private bool drawVectors = false;
 
-        private Vector2 GetInstantSpeed()                 //returns speed*direction
-        {
-            Vector2 spd;
-
-            spd.X = this.speed.X * this.direction.X;
-            spd.Y = this.speed.Y * this.direction.Y;
-
-            return spd;
-        }
+ 
 
         /*-------------------------
                    GETTERS
          -------------------------*/
+
 
         public Vector2 GetPos()                           
         { return this.pos; }
@@ -41,15 +36,34 @@ namespace rl_pong
             return this.direction;
         }
 
+        private Vector2 GetInstantSpeed()                 //returns speed*direction
+        {
+            Vector2 spd;
+
+            spd.X = this.speed.X * this.direction.X;
+            spd.Y = this.speed.Y * this.direction.Y;
+
+            return spd;
+        }
 
         /*-------------------------
                 SETTERS
         -------------------------*/
+        
+        public void SetLastCollision(float x, float y)
+        {
+            this.lastCollision = new(x, y);
+        }
 
         public void SetPos(float x, float y)
         {
-            this.pos.X = x;
-            this.pos.Y = y; 
+            this.pos = new(x, y);
+        }
+
+        public void SetDirection(float x, float y)
+        {
+            this.direction.X = x;
+            this.direction.Y = y;
         }
 
 
@@ -82,15 +96,34 @@ namespace rl_pong
             }
         }
 
+        public void DrawVectors()
+        {
+
+            if (Raylib.IsKeyPressed(KeyboardKey.V))
+                this.drawVectors = !this.drawVectors;
+
+
+            if(!this.drawVectors) return;
+
+            Color color = Color.White;
+            color.A = 50;
+
+            Raylib.DrawTriangleLines(
+                this.vectors[0],
+                this.vectors[1],
+                this.vectors[2],
+                color
+                );
+        }
+
         private void CalculateSpeed(Rectangle collider)
         {
 
             Vector2 dst = this.pos;
             Vector2 src = lastCollision;
-            Vector2 a = new(Program.screenWidth / 2, this.pos.Y);
+            Vector2 a = new(Program.screenWidth, this.pos.Y);
 
             bool negativeSpeedX = this.direction.X < 0;
-            bool negativeSpeedY = this.direction.Y < 0;
             bool reverseSpeedY = this.pos.Y < collider.Position.Y + (collider.Height / 2);
 
             float hip = System.Numerics.Vector2.Distance(dst, src);
@@ -106,8 +139,11 @@ namespace rl_pong
 
             if (negativeSpeedX) this.direction.X *= -1;
 
-            if (negativeSpeedY) this.direction.Y *= -1;
             if (reverseSpeedY) this.direction.Y *= -1;
+
+            this.vectors[0] = dst;
+            this.vectors[1] = src;
+            this.vectors[2] = a;
 
             Console.WriteLine(this.direction.ToString());
 

@@ -10,7 +10,7 @@ namespace rl_pong
         public void Move()
         {
             Ball target = Program.ball;
-            bool canMove = Math.Abs(this.GetPos() - target.GetPos().Y) - Raylib.GetRandomValue(-20, 20) > this.GetSpeed();
+            bool canMove = Math.Abs(this.GetPos() - target.GetPos().Y) > this.GetSpeed();
 
             if (target.GetDirection().X > 0 && canMove) {
 
@@ -23,8 +23,8 @@ namespace rl_pong
         
             else if(target.GetDirection().X < 0 && canMove)
             {
-                if (this.GetPos() > 400) this.IncrementPosition(-this.GetSpeed());
-                if (this.GetPos() < 400) this.IncrementPosition(this.GetSpeed());
+                if (this.GetPos() > (Program.screenHeight / 2) - this.GetSize()/2) this.IncrementPosition(-this.GetSpeed());
+                if (this.GetPos() < (Program.screenHeight / 2) - this.GetSize()/2) this.IncrementPosition(this.GetSpeed());
             }
 
         
