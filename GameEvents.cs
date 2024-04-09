@@ -27,11 +27,12 @@ public class GameEvents
         int j = 3;
         Color color = WHITE;
 
-        while (true)
+        while (!Raylib.WindowShouldClose())
         {
             color.a = System.Convert.ToByte(i);
 
             Raylib.BeginDrawing();
+            Raylib.ClearBackground(DARKGRAY);
 
             Raylib.DrawRectangle(
                 (Program.screenWidth / 2 - Raylib.MeasureText(j.ToString(), 100)) - 10,
@@ -48,7 +49,7 @@ public class GameEvents
                 100,
                 WHITE);
 
-            i -= 255/Raylib.GetMonitorRefreshRate(0);
+            i -= 255 / Program.refreshRate * 2 ;
 
             if (i < 1)
             {
@@ -60,13 +61,12 @@ public class GameEvents
 
             if (j == 0) break;
 
-            
         }
     }
 
-    public void CheckResetGame()
+    public void CheckResetGame(bool force = false)
     {
-        if (!Raylib.IsKeyPressed(KeyboardKey.KEY_R)) return;
+        if (!Raylib.IsKeyPressed(KeyboardKey.KEY_R) && !force) return;
 
         Program.player.SetPoints(0);
         Program.cpu.SetPoints(0);
@@ -79,14 +79,14 @@ public class GameEvents
     {
         Ball b = Program.ball;
 
-        if (b.GetPos().X - b.GetRadius() <= b.GetRadius())
+        if (b.GetPos().X - b.GetRadius() <= 10)
         {
             Program.cpu.IncPoints();
             ResetBall();
             this.ResetCooldown();
         }
 
-        else if (b.GetPos().X + b.GetRadius() > Program.screenWidth - b.GetRadius())
+        else if (b.GetPos().X + b.GetRadius() > Program.screenWidth - 10)
         {
             Program.player.IncPoints();
             ResetBall();
@@ -101,24 +101,24 @@ public class GameEvents
 
         Color color = new(100, 100, 100, 10);
 
-        while (this.paused)
+        while (this.paused && !Raylib.WindowShouldClose()!)
         {
-            Raylib.BeginDrawing();
 
-            Raylib.DrawRectangle(
-                0,
-                0,
-                Program.screenWidth,
-                Program.screenHeight,
-                color
-                );
+            
+            Raylib.BeginDrawing();
+            Raylib.ClearBackground(DARKGRAY);
+
+            Program.draw.DrawBall(Program.ball);
+            Program.draw.DrawPlayer(Program.player);
+            Program.draw.DrawPlayer(Program.cpu);
+            Program.draw.DrawHUD();
+            Program.draw.DrawControls();
 
             Raylib.EndDrawing();
 
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_P))
                 this.paused = !this.paused;
         }
-
 
     }
 

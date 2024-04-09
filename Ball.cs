@@ -5,11 +5,11 @@ namespace rl_pong
 {
     public class Ball
     {
-        private readonly int radius = 10;
+        private readonly int radius = 7;
 
-        private Vector2 pos = new( 600, 450);               
+        private Vector2 pos = new(200, 150);               
         private Vector2 direction = new(-1, 0);                 // unitary Vector2 (starts as -1, 0 but defaults as 1, 1)
-        private Vector2 speed = new(4,3);                       // direction speed multiplier
+        private Vector2 speed = new(10 , 5);                       // direction speed multiplier
         private Vector2 lastCollision = 
             new(Program.screenWidth/2,Program.screenHeight/2);  //used to determine direction after collision
         private Vector2[] vectors = new Vector2[3];
@@ -141,7 +141,7 @@ namespace rl_pong
             this.vectors[1] = src;
             this.vectors[2] = a;
 
-            Console.WriteLine(this.direction.ToString());
+            //Console.WriteLine(this.direction.ToString());
 
         }
 

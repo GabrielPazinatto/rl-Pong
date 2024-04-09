@@ -2,9 +2,10 @@
 global using System.Numerics;
 
 global using static Raylib_CsLo.Raylib;
-global using static Raylib_CsLo.RayMath;
 global using static Raylib_CsLo.RayGui;
-global using static Raylib_CsLo.RlGl;
+using System.Security.Authentication.ExtendedProtection;
+using System.Linq.Expressions;
+using Draw;
 
 namespace rl_pong
 {
@@ -12,27 +13,40 @@ namespace rl_pong
     {
         public static LocalPlayer player = new(); 
         public static CPUPlayer cpu = new();
-
         public static Ball ball = new();
+        public static Draw.DrawGame draw = new();
+        public static GameEvents game = new();
 
-        public static int screenWidth = 1200;
-        public static int screenHeight = 900;
+        public readonly static int screenWidth = 400;
+        public readonly static int screenHeight = 300;
+        public readonly static int refreshRate = 60;
 
         public static void Main()
         {
-            Draw.DrawGame draw = new();
-            GameEvents game = new();
 
-            Raylib.SetTargetFPS(Raylib.GetMonitorRefreshRate(0));                     // sets FPS
+
+            Raylib.SetTargetFPS(60);                     // sets FPS
             Raylib.InitWindow(Program.screenWidth, Program.screenHeight, "Pong");     // 
+
+
+            while (!Raylib.WindowShouldClose() && !IsKeyPressed(KeyboardKey.KEY_SPACE))
+            {
+
+                draw.DrawMainMenu();
+
+            }
+
+            /*-------------------
+                GAME STARTS HERE
+            ---------------------*/
+
+            game.CheckResetGame(true);
 
             while (!Raylib.WindowShouldClose())
             {
 
                 Raylib.BeginDrawing();
                 Raylib.ClearBackground(DARKGRAY);
-
-
 
                 /*-------------------
                         DRAWING
@@ -45,7 +59,7 @@ namespace rl_pong
                 draw.DrawControls();
 
                 /*-------------------
-                       UPDATING
+                        UPDATING
                 --------------------*/
 
                 game.CheckIfScored();
@@ -58,6 +72,7 @@ namespace rl_pong
 
                 Raylib.EndDrawing();
             }
+            
         }
     }
 }

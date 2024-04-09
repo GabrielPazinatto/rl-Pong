@@ -7,6 +7,33 @@ namespace Draw
     public class DrawGame
     {
 
+        public void DrawMainMenu()
+        {
+            while (!Raylib.WindowShouldClose() && Raylib.GetKeyPressed() == 0)
+            {
+                Raylib.BeginDrawing();
+                Raylib.ClearBackground(DARKGRAY);
+
+                Raylib.DrawText(
+                    "Pong :)",
+                    Program.screenWidth/2 - Raylib.MeasureText("Pong :)", 50)/2,
+                    50,
+                    50,
+                    GREEN
+                    );
+
+                Raylib.DrawText(
+                    "Press SPACE to start!",
+                    Program.screenWidth / 2 - Raylib.MeasureText("Press SPACE to start!", 30) / 2,
+                    180,
+                    30,
+                    GREEN
+                    );
+
+                Raylib.EndDrawing();
+            }
+        }
+
         public void DrawPlayer(Player player)
         {
             Raylib.DrawRectangleRec(player.GetRectangle(), WHITE);
@@ -53,7 +80,7 @@ namespace Draw
 
             //draws points for the players
             String text = Program.player.GetPoints().ToString();
-            int fontSize = 100;
+            int fontSize = 30;
 
             Raylib.DrawText(
                 text,
@@ -82,7 +109,7 @@ namespace Draw
                 "Pause (p)",
                 15,
                 Program.screenHeight - 20,
-                20,
+                15,
                 new(255, 255, 255, 100)
             );
 
@@ -90,8 +117,8 @@ namespace Draw
             Raylib.DrawText(
                 "Draw Vectors (v)",
                 15,
-                Program.screenHeight - 45,
-                20,
+                Program.screenHeight - 35,
+                15,
                 new(255, 255, 255, 100)
             );
 
@@ -99,8 +126,8 @@ namespace Draw
             Raylib.DrawText(
                 "Reset (r)",
                 15,
-                Program.screenHeight - 70,
-                20,
+                Program.screenHeight - 50,
+                15,
                 new(255, 255, 255, 100)
             );
         }

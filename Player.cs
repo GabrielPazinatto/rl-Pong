@@ -8,8 +8,8 @@ namespace rl_pong
 
         private int points = 0;
         private float speed = 1;
-        private float size = 150;
-        private float pos = 400;
+        private float size = 50;
+        private float pos = 125;
 
         /*-------------------------
                 CONSTRUCTOR
@@ -19,16 +19,16 @@ namespace rl_pong
         {
             if(type == "cpu")
             {
-                this.speed = 1;
-                this.HorizontalPosOffset = 1100;
+                this.speed = 3;
+                this.HorizontalPosOffset = 350;
                 this.BarWidth = 10;
                 this.points = 0;
             }
 
             if(type == "local")
             {
-                this.speed = 2;
-                this.HorizontalPosOffset = 100;
+                this.speed = 5;
+                this.HorizontalPosOffset = 50;
                 this.BarWidth = 10;
                 this.points = 0;
             }
