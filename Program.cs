@@ -31,9 +31,7 @@ namespace rl_pong
 
             while (!Raylib.WindowShouldClose() && !IsKeyPressed(KeyboardKey.KEY_SPACE))
             {
-
                 draw.DrawMainMenu();
-
             }
 
             /*-------------------

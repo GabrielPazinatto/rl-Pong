@@ -5,9 +5,9 @@ public class GameEvents
 {
     private bool paused = false;
 
+    //resets ball to the middle of the screen
     private void ResetBall()
     {
-
         Program.ball.SetDirection(-1, 0);
 
         Program.ball.SetPos(
@@ -21,6 +21,7 @@ public class GameEvents
 
     }
 
+    //countdown during reset
     private void ResetCooldown()
     {
         int i = 255;
@@ -104,7 +105,6 @@ public class GameEvents
         while (this.paused && !Raylib.WindowShouldClose()!)
         {
 
-            
             Raylib.BeginDrawing();
             Raylib.ClearBackground(DARKGRAY);
 

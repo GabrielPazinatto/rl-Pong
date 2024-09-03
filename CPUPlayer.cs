@@ -1,6 +1,4 @@
 ﻿
-using Raylib_cs;
-
 namespace rl_pong
 {
     public class CPUPlayer : Player

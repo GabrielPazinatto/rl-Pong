@@ -10,8 +10,8 @@ namespace rl_pong
         private Vector2 pos = new(200, 150);               
         private Vector2 direction = new(-1, 0);                 // unitary Vector2 (starts as -1, 0 but defaults as 1, 1)
         private Vector2 speed = new(10 , 5);                       // direction speed multiplier
-        private Vector2 lastCollision = 
-            new(Program.screenWidth/2,Program.screenHeight/2);  //used to determine direction after collision
+        private Vector2 lastCollision = new(
+            Program.screenWidth/2,Program.screenHeight/2);  //used to determine direction after collision
         private Vector2[] vectors = new Vector2[3];
         private bool drawVectors = false;
 
@@ -72,7 +72,7 @@ namespace rl_pong
             float speedX = this.GetInstantSpeed().X;
             float speedY = this.GetInstantSpeed().Y;
 
-            //predicts future position adding speed to current position
+            //predicts future position based on current speed
             float futurePosX = this.pos.X + speedX;
             float futurePosY = this.pos.Y + speedY;
 
@@ -81,23 +81,21 @@ namespace rl_pong
             {
                 this.direction.X *= -1;
                 this.lastCollision = this.pos;
-
             }
 
             if (futurePosY + this.radius > Program.screenHeight || futurePosY - this.radius < 0)
             {
                 this.direction.Y *= -1;
                 this.lastCollision = this.pos;
-
             }
         }
 
+        //draws the triangles used to calculate direction after collision
         public void DrawVectors()
         {
 
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_V))
                 this.drawVectors = !this.drawVectors;
-
 
             if(!this.drawVectors) return;
 
@@ -112,6 +110,8 @@ namespace rl_pong
                 );
         }
 
+
+        //calculates the direction of the ball after collision using some basic trigonometry
         private void CalculateSpeed(Rectangle collider)
         {
 
@@ -140,16 +140,15 @@ namespace rl_pong
             this.vectors[0] = dst;
             this.vectors[1] = src;
             this.vectors[2] = a;
-
-            //Console.WriteLine(this.direction.ToString());
-
         }
-
+        
+        // checks collision with player and cpu
         private void CheckPlayerCollision(){
-            Rectangle playerRec = Program.player.GetRectangle();
             Player p = Program.player;
             Player cpu = Program.cpu;
 
+            //checks collision with player
+            Rectangle playerRec = Program.player.GetRectangle();
             if (Raylib.CheckCollisionCircleRec(
                 this.pos,
                 this.radius,
@@ -160,8 +159,8 @@ namespace rl_pong
                     this.pos.X = p.GetOffset() + p.BarWidth + this.radius;
                 }
 
+            //checks collision with cpu
             Rectangle CPURec = cpu.GetRectangle();
-
             if (Raylib.CheckCollisionCircleRec(
                 this.pos,
                 this.radius,
@@ -171,9 +170,6 @@ namespace rl_pong
                     this.lastCollision = this.pos;
                     this.pos.X = cpu.GetOffset() - cpu.BarWidth - this.radius;
                 }
-
-            //Console.WriteLine(this.pos.ToString());
-
         }
 
         public void Move()
@@ -181,12 +177,11 @@ namespace rl_pong
             this.CheckOutOfScreen();
             this.CheckPlayerCollision();
 
-            //speed normalization avoids object moving faster diagonally
+            //speed normalization avoids object moving faster when diagonally
             this.direction = System.Numerics.Vector2.Normalize(this.direction);
 
             this.pos.X += this.GetInstantSpeed().X;
             this.pos.Y += this.GetInstantSpeed().Y;
         }
-
     }
 }
